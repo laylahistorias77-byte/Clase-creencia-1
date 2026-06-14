@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>La Creencia Islámica - Libreta Interactiva</title>
+    <title>La Creencia Islámica</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Comfortaa:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* Reset básico para móvil */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent; /* Elimina el recuadro gris al pulsar en iOS */
-            user-select: none; /* Evita seleccionar texto al dibujar */
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
         
         body, html {
@@ -23,27 +22,25 @@
             height: 100%;
             overflow: hidden;
             font-family: 'Fredoka', sans-serif;
-            background-color: #f7fff7; /* Fondo mint muy suave por defecto */
+            background-color: #f7fff7;
             color: #2c3e50;
         }
 
-        /* --- PORTADA NUEVA (Fondo Sólido Rosa Pastel) --- */
         #cover-screen {
             position: absolute;
             width: 100%;
             height: 100%;
-            background-color: #ffe5ec; /* Rosa pastel suave sólido */
+            background-color: #ffe5ec;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 30px;
-            z-index: 100; /* Siempre encima al inicio */
-            transition: opacity 0.5s ease-out; /* Animación de desaparición */
+            z-index: 100;
+            transition: opacity 0.5s ease-out;
         }
 
-        /* Cartel blanco para el título */
         .cover-card {
             background-color: white;
             padding: 40px;
@@ -67,9 +64,8 @@
             font-weight: 400;
         }
 
-        /* Botón de empezar grande y pulsable */
         .start-btn {
-            background-color: #4ecdc4; /* Mint vibrante */
+            background-color: #4ecdc4;
             color: white;
             border: none;
             padding: 18px 40px;
@@ -82,22 +78,19 @@
         }
 
         .start-btn:active {
-            transform: scale(0.95); /* Efecto de pulsación */
-            box-shadow: 0 3px 8px rgba(78, 205, 196, 0.2);
+            transform: scale(0.95);
         }
 
-        /* --- INTERIOR DE LA LIBRETA (Con Fondo Cuadriculado) --- */
         #notebook-screen {
             position: absolute;
             width: 100%;
             height: 100%;
-            display: none; /* Oculto al inicio */
+            display: none;
             flex-direction: column;
             padding: 10px;
             z-index: 10;
         }
 
-        /* Fondo de Libreta de Cuadros (Aparece solo aquí) */
         .notebook-grid {
             background-color: #fafbfc;
             background-image: 
@@ -106,18 +99,16 @@
             background-size: 25px 25px;
         }
 
-        /* LIENZO PARA DIBUJAR (Debajo de los botones) */
         #drawing-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% - 130px); /* Espacio para la barra de herramientas */
-            z-index: 5; /* Capa intermedia para dibujar */
+            height: calc(100% - 130px);
+            z-index: 5;
             cursor: crosshair;
         }
 
-        /* CONTENEDOR DE TEXTO (Páginas de apuntes) */
         .page-container {
             flex: 1;
             width: 100%;
@@ -127,7 +118,7 @@
             overflow-y: auto;
             padding: 20px 15px;
             position: relative;
-            z-index: 1; /* Debajo del lienzo y los botones */
+            z-index: 1;
         }
 
         .page {
@@ -140,7 +131,6 @@
             animation: fadeIn 0.4s ease;
         }
 
-        /* Estilos de los textos */
         h1.page-title {
             font-family: 'Comfortaa', cursive;
             color: #2d6a4f;
@@ -182,16 +172,8 @@
         ul li {
             margin-bottom: 10px;
             font-size: 1.1rem;
-            display: flex;
-            align-items: center;
         }
 
-        ul li span.emoji {
-            margin-right: 12px;
-            font-size: 1.2rem;
-        }
-
-        /* BARRA DE HERRAMIENTAS (Abajo - Siempre Pulsable) */
         .toolbar {
             height: 120px;
             background: #fff;
@@ -202,10 +184,9 @@
             justify-content: space-around;
             padding: 10px 15px;
             position: relative;
-            z-index: 20; /* POR ENCIMA DEL LIENZO para que se pueda pulsar bien */
+            z-index: 20;
         }
 
-        /* Fila de Herramientas (Lápiz, Subrayador, Borrador) */
         .tool-row {
             display: flex;
             justify-content: space-between;
@@ -215,9 +196,9 @@
         .btn-tool {
             background: #f0f0f0;
             border: none;
-            padding: 8px 15px;
+            padding: 8px 12px;
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             cursor: pointer;
             display: flex;
@@ -232,7 +213,17 @@
             box-shadow: 0 4px 0px #e63946;
         }
 
-        /* Paleta de Colores circulares */
+        /* Botón especial para la Voz de IA */
+        .btn-speak {
+            background: #7209b7;
+            color: white;
+            box-shadow: 0 4px 0px #5603a6;
+        }
+        .btn-speak.speaking {
+            background: #e63946;
+            box-shadow: 0 4px 0px #b51726;
+        }
+
         .color-palette {
             display: flex;
             gap: 10px;
@@ -244,7 +235,6 @@
             border-radius: 50%;
             border: 2px solid transparent;
             cursor: pointer;
-            transition: transform 0.1s;
         }
 
         .color-dot.selected {
@@ -252,14 +242,12 @@
             transform: scale(1.1);
         }
 
-        /* Deslizador de tamaño */
         .size-slider {
-            width: 80px;
+            width: 70px;
             accent-color: #ff6b6b;
             cursor: pointer;
         }
 
-        /* Fila de navegación (Flechas) */
         .nav-row {
             display: flex;
             justify-content: space-between;
@@ -282,11 +270,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.2s;
-        }
-
-        .nav-arrow:active {
-            background-color: #2ab7ad;
         }
 
         .nav-arrow:disabled {
@@ -304,7 +287,6 @@
             color: #333;
         }
 
-        /* Animación de entrada de página */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateX(15px); }
             to { opacity: 1; transform: translateX(0); }
@@ -327,70 +309,68 @@
 
         <div class="page-container" id="scroll-container">
             
-            <div class="page active">
+            <div class="page active" id="text-page-0">
                 <h1 class="page-title" style="margin-top: 30%;">CREENCIA ISLAMICA</h1>
-                <p style="text-align: center; font-size: 1.4rem; margin: 15px 0;">❤️ Apartado n1</p>
-                <p style="text-align: center; font-size: 1.3rem; color: #555;">📖 Clase n1 📖</p>
+                <p style="text-align: center; font-size: 1.4rem; margin: 15px 0;">Apartado n1</p>
+                <p style="text-align: center; font-size: 1.3rem; color: #555;">Clase n1</p>
             </div>
 
-            <div class="page">
-                <p>Es un deber para el musulmán aprender la creencia y aplicarla:</p>
+            <div class="page" id="text-page-1">
+                <p>Es un deber para el musulmán aprender la creencia y aplicarla.</p>
                 <ul>
-                    <li><span class="emoji">✔️</span> Para entrar al paraíso</li>
-                    <li><span class="emoji">✔️</span> Para que Allah acepte nuestras obras</li>
+                    <li>Para entrar al paraíso</li>
+                    <li>Para que Allah acepte nuestras obras</li>
                 </ul>
 
-                <h2 class="section-subtitle">¿Que significa 3aqida? <br><span style="font-size: 1.1rem; color: #52b788;">(creencia / عقيدة)</span></h2>
-                <p>❤️ <strong>En árabe:</strong> sujetar fuertemente / algo atado con firmeza</p>
-                <p>❤️ <strong>En el Islam:</strong> la fe absoluta en Allah</p>
+                <h2 class="section-subtitle">¿Que significa 3aqida? (creencia/ عقيدة) :</h2>
+                <p>En árabe: sujetar fuertemente / algo atado con firmeza</p>
+                <p>En el Islam: la fe absoluta en Allah</p>
                 
-                <p style="margin-top: 15px;">Fe absoluta en todo lo mencionado en el <strong>Quran</strong> (la palabra de Allah) y <strong>Sunnah</strong> (enseñanza de Allah al profeta ﷺ).</p>
+                <p style="margin-top: 15px;">Fe absoluta en todo lo mencionado en el Quran (la palabra de Allah) y Sunnah (enseñanza de Allah a el profeta).</p>
 
                 <div class="highlight-box">
-                    ⏪️ Necesitamos el corazón ligado a la fe sin duda, esto es la creencia Islámica. ⏩️
+                    Necesitamos el corazón ligado a la fe sin duda, esto es la creencia Islámica.
                 </div>
             </div>
 
-            <div class="page">
-                <h1 class="page-title">🫰 Sinónimos de la creencia</h1>
-                
+            <div class="page" id="text-page-2">
+                <h1 class="page-title">Sinónimos de la creencia</h1>
                 <ul>
-                    <li>🔘 <strong>Tawhid:</strong> Monoteísmo</li>
-                    <li>🔘 <strong>Ahl al-Sunnah:</strong> Gente de la Sunnah</li>
-                    <p style="font-size: 1rem; color: #666; padding-left: 24px; margin-bottom: 10px;">(Siguen Quran y Sunnah como Allah ordenó)</p>
-                    <li>🔘 <strong>Usul al-Din:</strong> Fundamentos del Islam</li>
-                    <li>🔘 <strong>Al-Fiqh al-Akbar:</strong> El entendimiento mayor</li>
-                    <p style="font-size: 1rem; color: #666; padding-left: 24px; margin-bottom: 10px;">(abarca el monoteísmo, fe, destino)</p>
-                    <li>🔘 <strong>Asharia:</strong> normas y leyes</li>
-                    <li>💜 <strong>Iman:</strong> la fe</li>
+                    <li>Tawhid: Monoteísmo</li>
+                    <li>Ahl al-Sunnah: Gente de la Sunnah</li>
+                    <p style="font-size: 1rem; color: #666; padding-left: 20px; margin-bottom: 10px;">(Siguen Quran y Sunnah como Allah ordenó)</p>
+                    <li>Usul al-Din: Fundamentos del Islam</li>
+                    <li>Al-Fiqh al-Akbar: El entendimiento mayor (abarca el monoteísmo, fe, destino)</li>
+                    <li>Asharia: normas y leyes</li>
+                    <li>Iman: la fe</li>
                 </ul>
             </div>
 
-            <div class="page">
+            <div class="page" id="text-page-3">
                 <div class="highlight-box" style="border-left-color: #e63946; background-color: rgba(230,57,70,0.05);">
-                    Quien asocia a Allah sus obras no son aceptadas (18:110)
+                    Quien asocia a Allah sus obras no son aceptadas 18:110
                 </div>
-                <p>Todos los mensajeros predicaron la creencia Islámica y todos fueron musulmanes (16:36 / 21:25)</p>
+                <p>Todos los mensajeros predicaron la creencia Islámica y todos fueron musulmanes 16:36 / 21:25</p>
                 
-                <p style="margin: 20px 0;">✍️ <strong>El tema más importante es la creencia</strong> porque otorga las respuestas a nuestras preguntas.</p>
+                <p style="margin: 20px 0;">El tema más importante es la creencia porque otorga las respuestas a nuestras preguntas.</p>
                 
-                <p>📌 La creencia te llena, te da firmeza, aumenta la fe, al entender la sabiduría de las pruebas, por qué estamos aquí, nuestro deber y todo lo que abarca este tema.</p>
+                <p>La creencia te llena, te da firmeza, aumenta la fe, al entender la sabiduría de las pruebas, por qué estamos aquí, nuestro deber y todo lo que abarca este tema.</p>
                 
                 <ul style="margin-top: 15px;">
-                    <li><span class="emoji">✅</span> Seguridad en esta vida y en la otra</li>
-                    <li><span class="emoji">✅</span> Razón para ser bendecido en esta vida y en la otra</li>
+                    <li>Seguridad en esta vida y en la otra</li>
+                    <li>Razón para ser bendecido en esta vida y en la otra</li>
                 </ul>
             </div>
 
-            <div class="page">
+            <div class="page" id="text-page-4">
                 <h1 class="page-title">Características Básicas</h1>
                 <p style="font-size: 1.1rem; line-height: 1.7; background: #e8f1f2; padding: 15px; border-radius: 8px;">
-                    <strong>La creencia Islámica es:</strong> <br>Clara, sencilla, innata <br>(todos nacen con el Islam esto se llama fitra)
+                    La creencia Islámica es: Clara, sencilla, innata (todos nacen con el Islam esto se llama fitra)
                 </p>
                 
                 <div style="margin-top: 25px;">
-                    <p>📍 <strong>Es fija:</strong> no cambió ni cambiará.</p>
-                    <p>❕ <strong>Evidencias:</strong> Se basa en evidencias claras.</p>
+                    <p>Es fija no cambió ni cambiará.</p>
+                    <p>Se basa en evidencias claras.</p>
                 </div>
             </div>
 
@@ -401,7 +381,8 @@
                 <button class="btn-tool active" id="tool-pencil" onclick="setTool('pencil')">✏️ Lápiz</button>
                 <button class="btn-tool" id="tool-marker" onclick="setTool('marker')">🖍️ Subrayar</button>
                 <button class="btn-tool" id="tool-eraser" onclick="setTool('eraser')">🧼 Borrar</button>
-                <input type="range" class="size-slider" id="brush-size" min="3" max="30" value="8">
+                
+                <button class="btn-tool btn-speak" id="speak-btn" onclick="toggleSpeech()">🔊 Leer Hoja</button>
             </div>
 
             <div class="tool-row">
@@ -412,7 +393,7 @@
                     <div class="color-dot" style="background: #7209b7;" onclick="setColor('#7209b7', this)"></div>
                     <div class="color-dot" style="background: #2b2d42;" onclick="setColor('#2b2d42', this)"></div>
                 </div>
-                <button class="btn-tool" style="background: #ffe5ec; color: #ff4d6d; padding: 6px 10px;" onclick="clearCanvas()">🗑️ Limpiar</button>
+                <input type="range" class="size-slider" id="brush-size" min="3" max="30" value="8">
             </div>
 
             <div class="nav-row">
@@ -431,7 +412,6 @@
         const nextBtn = document.getElementById('next-btn');
         const pageNumDisplay = document.getElementById('page-num');
         
-        // Variables de Dibujo
         const canvas = document.getElementById('drawing-canvas');
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
@@ -439,20 +419,22 @@
         let currentColor = '#ff4d6d';
         let brushSizeInput = document.getElementById('brush-size');
 
-        // Estructura para guardar dibujos por página
         let savedDrawings = {};
+        
+        // Control de Voz de IA
+        let synth = window.speechSynthesis;
+        let currentUtterance = null;
+        let isSpeaking = false;
 
-        // Función para abrir la libreta desde la portada
         function openNotebook() {
             document.getElementById('cover-screen').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('cover-screen').style.display = 'none';
                 document.getElementById('notebook-screen').style.display = 'flex';
-                resizeCanvas(); // Ajustar canvas al tamaño de pantalla móvil real
+                resizeCanvas();
             }, 500);
         }
 
-        // Ajustar el canvas al contenedor de forma dinámica
         function resizeCanvas() {
             const container = document.getElementById('scroll-container');
             if(container) {
@@ -464,104 +446,10 @@
 
         window.addEventListener('resize', resizeCanvas);
 
-        // FUNCIONES DE DIBUJO
-        function getPos(e) {
-            const rect = canvas.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            return { x: clientX - rect.left, y: clientY - rect.top };
-        }
-
-        function startDrawing(e) {
-            isDrawing = true;
-            const pos = getPos(e);
-            ctx.beginPath();
-            ctx.moveTo(pos.x, pos.y);
-            
-            // Configurar trazo
-            ctx.lineWidth = brushSizeInput.value;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-
-            if (currentTool === 'pencil') {
-                ctx.globalCompositeOperation = 'source-over';
-                ctx.strokeStyle = currentColor;
-                ctx.globalAlpha = 1.0;
-            } else if (currentTool === 'marker') {
-                ctx.globalCompositeOperation = 'source-over';
-                ctx.strokeStyle = currentColor;
-                ctx.globalAlpha = 0.4; // Transparencia para subrayar
-            } else if (currentTool === 'eraser') {
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.globalAlpha = 1.0;
-            }
-        }
-
-        function draw(e) {
-            if (!isDrawing) return;
-            e.preventDefault(); // Evitar scroll al dibujar
-            const pos = getPos(e);
-            ctx.lineTo(pos.x, pos.y);
-            ctx.stroke();
-        }
-
-        function stopDrawing() {
-            if (isDrawing) {
-                ctx.closePath();
-                isDrawing = false;
-                saveDrawing();
-            }
-        }
-
-        // Eventos táctiles y mouse para el canvas (Z-index 5)
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing);
-
-        canvas.addEventListener('touchstart', startDrawing, {passive: false});
-        canvas.addEventListener('touchmove', draw, {passive: false});
-        canvas.addEventListener('touchend', stopDrawing);
-
-        // HERRAMIENTAS DE DIBUJO
-        function setTool(tool) {
-            currentTool = tool;
-            document.querySelectorAll('.btn-tool').forEach(b => b.classList.remove('active'));
-            document.getElementById(`tool-${tool}`).classList.add('active');
-        }
-
-        function setColor(color, element) {
-            currentColor = color;
-            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
-            element.classList.add('selected');
-            if (currentTool === 'eraser') setTool('pencil'); // Volver a lápiz al cambiar color
-        }
-
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            saveDrawing();
-        }
-
-        // GUARDADO DE DIBUJOS POR HOJA
-        function saveDrawing() {
-            savedDrawings[currentPage] = canvas.toDataURL();
-        }
-
-        function restoreDrawing() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            if (savedDrawings[currentPage]) {
-                let img = new Image();
-                img.src = savedDrawings[currentPage];
-                img.onload = function() {
-                    ctx.globalCompositeOperation = 'source-over';
-                    ctx.globalAlpha = 1.0;
-                    ctx.drawImage(img, 0, 0);
-                }
-            }
-        }
-
         // NAVEGACIÓN ENTRE HOJAS
         function changePage(direction) {
-            saveDrawing(); // Salvar lo pintado antes de cambiar
+            stopSpeech(); // Para la voz automáticamente si cambias de hoja
+            saveDrawing();
             
             pages[currentPage].classList.remove('active');
             currentPage += direction;
@@ -571,11 +459,4 @@
             prevBtn.disabled = (currentPage === 0);
             nextBtn.disabled = (currentPage === pages.length - 1);
 
-            document.getElementById('scroll-container').scrollTop = 0; // Subir arriba automáticamente
-
-            restoreDrawing(); // Recuperar dibujos de la nueva hoja
-        }
-    </script>
-</body>
-</html>
-
+            document.getElementById('
