@@ -26,6 +26,7 @@
             color: #2c3e50;
         }
 
+        /* PORTADA */
         #cover-screen {
             position: absolute;
             width: 100%;
@@ -38,7 +39,6 @@
             text-align: center;
             padding: 30px;
             z-index: 100;
-            transition: opacity 0.5s ease-out;
         }
 
         .cover-card {
@@ -61,7 +61,6 @@
         .sub-title {
             font-size: 1.1rem;
             color: #a0afb7;
-            font-weight: 400;
         }
 
         .start-btn {
@@ -74,13 +73,9 @@
             font-weight: 600;
             cursor: pointer;
             box-shadow: 0 6px 15px rgba(78, 205, 196, 0.3);
-            transition: transform 0.1s;
         }
 
-        .start-btn:active {
-            transform: scale(0.95);
-        }
-
+        /* CONTENEDOR PRINCIPAL INTERIOR */
         #notebook-screen {
             position: absolute;
             width: 100%;
@@ -99,22 +94,22 @@
             background-size: 25px 25px;
         }
 
+        /* LIENZO DE DIBUJO - El truco clave está aquí */
         #drawing-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% - 130px);
+            height: calc(100% - 140px);
             z-index: 5;
             cursor: crosshair;
+            pointer-events: none; /* Por defecto deja pasar los clics al fondo y botones */
         }
 
+        /* CONTENEDOR DE TEXTO */
         .page-container {
             flex: 1;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
             overflow-y: auto;
             padding: 20px 15px;
             position: relative;
@@ -128,7 +123,6 @@
 
         .page.active {
             display: block;
-            animation: fadeIn 0.4s ease;
         }
 
         h1.page-title {
@@ -174,8 +168,9 @@
             font-size: 1.1rem;
         }
 
+        /* BARRA DE HERRAMIENTAS - TOTALMENTE PROTEGIDA */
         .toolbar {
-            height: 120px;
+            height: 130px;
             background: #fff;
             border-radius: 20px 20px 0 0;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
@@ -184,7 +179,7 @@
             justify-content: space-around;
             padding: 10px 15px;
             position: relative;
-            z-index: 20;
+            z-index: 30; /* Muy por encima de todo */
         }
 
         .tool-row {
@@ -213,7 +208,6 @@
             box-shadow: 0 4px 0px #e63946;
         }
 
-        /* Botón especial para la Voz de IA */
         .btn-speak {
             background: #7209b7;
             color: white;
@@ -286,11 +280,6 @@
             font-size: 0.9rem;
             color: #333;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(15px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
     </style>
 </head>
 <body>
@@ -305,8 +294,6 @@
 
     <div id="notebook-screen" class="notebook-grid">
         
-        <canvas id="drawing-canvas"></canvas>
-
         <div class="page-container" id="scroll-container">
             
             <div class="page active" id="text-page-0">
@@ -318,8 +305,8 @@
             <div class="page" id="text-page-1">
                 <p>Es un deber para el musulmán aprender la creencia y aplicarla.</p>
                 <ul>
-                    <li>Para entrar al paraíso</li>
-                    <li>Para que Allah acepte nuestras obras</li>
+                    <li>• Para entrar al paraíso</li>
+                    <li>• Para que Allah acepte nuestras obras</li>
                 </ul>
 
                 <h2 class="section-subtitle">¿Que significa 3aqida? (creencia/ عقيدة) :</h2>
@@ -336,13 +323,14 @@
             <div class="page" id="text-page-2">
                 <h1 class="page-title">Sinónimos de la creencia</h1>
                 <ul>
-                    <li>Tawhid: Monoteísmo</li>
-                    <li>Ahl al-Sunnah: Gente de la Sunnah</li>
-                    <p style="font-size: 1rem; color: #666; padding-left: 20px; margin-bottom: 10px;">(Siguen Quran y Sunnah como Allah ordenó)</p>
-                    <li>Usul al-Din: Fundamentos del Islam</li>
-                    <li>Al-Fiqh al-Akbar: El entendimiento mayor (abarca el monoteísmo, fe, destino)</li>
-                    <li>Asharia: normas y leyes</li>
-                    <li>Iman: la fe</li>
+                    <li style="margin-bottom: 15px;">• <strong>Tawhid:</strong> Monoteísmo</li>
+                    <li style="margin-bottom: 5px;">• <strong>Ahl al-Sunnah:</strong> Gente de la Sunnah</li>
+                    <p style="font-size: 1rem; color: #666; padding-left: 15px; margin-bottom: 20px;">(Siguen Quran y Sunnah como Allah ordenó)</p>
+                    <li style="margin-bottom: 15px;">• <strong>Usul al-Din:</strong> Fundamentos del Islam</li>
+                    <li style="margin-bottom: 5px;">• <strong>Al-Fiqh al-Akbar:</strong> El entendimiento mayor</li>
+                    <p style="font-size: 1rem; color: #666; padding-left: 15px; margin-bottom: 20px;">(abarca el monoteísmo, fe, destino)</p>
+                    <li style="margin-bottom: 15px;">• <strong>Asharia:</strong> normas y leyes</li>
+                    <li style="margin-bottom: 15px;">• <strong>Iman:</strong> la fe</li>
                 </ul>
             </div>
 
@@ -357,8 +345,8 @@
                 <p>La creencia te llena, te da firmeza, aumenta la fe, al entender la sabiduría de las pruebas, por qué estamos aquí, nuestro deber y todo lo que abarca este tema.</p>
                 
                 <ul style="margin-top: 15px;">
-                    <li>Seguridad en esta vida y en la otra</li>
-                    <li>Razón para ser bendecido en esta vida y en la otra</li>
+                    <li>• Seguridad en esta vida y en la otra</li>
+                    <li>• Razón para ser bendecido en esta vida y en la otra</li>
                 </ul>
             </div>
 
@@ -369,19 +357,20 @@
                 </p>
                 
                 <div style="margin-top: 25px;">
-                    <p>Es fija no cambió ni cambiará.</p>
-                    <p>Se basa en evidencias claras.</p>
+                    <p>📍 Es fija no cambió ni cambiará.</p>
+                    <p>❕ Se basa en evidencias claras.</p>
                 </div>
             </div>
 
         </div>
+
+        <canvas id="drawing-canvas"></canvas>
 
         <div class="toolbar">
             <div class="tool-row">
                 <button class="btn-tool active" id="tool-pencil" onclick="setTool('pencil')">✏️ Lápiz</button>
                 <button class="btn-tool" id="tool-marker" onclick="setTool('marker')">🖍️ Subrayar</button>
                 <button class="btn-tool" id="tool-eraser" onclick="setTool('eraser')">🧼 Borrar</button>
-                
                 <button class="btn-tool btn-speak" id="speak-btn" onclick="toggleSpeech()">🔊 Leer Hoja</button>
             </div>
 
@@ -411,6 +400,7 @@
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
         const pageNumDisplay = document.getElementById('page-num');
+        const container = document.getElementById('scroll-container');
         
         const canvas = document.getElementById('drawing-canvas');
         const ctx = canvas.getContext('2d');
@@ -421,22 +411,17 @@
 
         let savedDrawings = {};
         
-        // Control de Voz de IA
         let synth = window.speechSynthesis;
         let currentUtterance = null;
         let isSpeaking = false;
 
         function openNotebook() {
-            document.getElementById('cover-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('cover-screen').style.display = 'none';
-                document.getElementById('notebook-screen').style.display = 'flex';
-                resizeCanvas();
-            }, 500);
+            document.getElementById('cover-screen').style.display = 'none';
+            document.getElementById('notebook-screen').style.display = 'flex';
+            resizeCanvas();
         }
 
         function resizeCanvas() {
-            const container = document.getElementById('scroll-container');
             if(container) {
                 canvas.width = container.clientWidth;
                 canvas.height = container.clientHeight;
@@ -446,9 +431,9 @@
 
         window.addEventListener('resize', resizeCanvas);
 
-        // NAVEGACIÓN ENTRE HOJAS
+        // NAVEGACIÓN
         function changePage(direction) {
-            stopSpeech(); // Para la voz automáticamente si cambias de hoja
+            stopSpeech();
             saveDrawing();
             
             pages[currentPage].classList.remove('active');
@@ -459,4 +444,151 @@
             prevBtn.disabled = (currentPage === 0);
             nextBtn.disabled = (currentPage === pages.length - 1);
 
-            document.getElementById('
+            container.scrollTop = 0;
+            restoreDrawing();
+        }
+
+        // VOZ IA
+        function toggleSpeech() {
+            const speakBtn = document.getElementById('speak-btn');
+            if (isSpeaking) {
+                stopSpeech();
+            } else {
+                let pageText = document.getElementById(`text-page-${currentPage}`).innerText;
+                pageText = pageText.replace(/[\/()]/g, ' '); 
+
+                currentUtterance = new SpeechSynthesisUtterance(pageText);
+                currentUtterance.lang = 'es-ES';
+                currentUtterance.onend = stopSpeech;
+
+                speakBtn.innerText = "⏹️ Parar";
+                speakBtn.classList.add('speaking');
+                isSpeaking = true;
+                synth.speak(currentUtterance);
+            }
+        }
+
+        function stopSpeech() {
+            const speakBtn = document.getElementById('speak-btn');
+            if(speakBtn) {
+                synth.cancel();
+                speakBtn.innerText = "🔊 Leer Hoja";
+                speakBtn.classList.remove('speaking');
+                isSpeaking = false;
+            }
+        }
+
+        // CAPTURA DE TOQUES SELECCIONANDO SI SE DIBUJA O SE PULSA TEXTO
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        // Eventos en el contenedor de scroll (detecta el dedo antes del canvas)
+        container.addEventListener('touchstart', function(e) {
+            if (currentTool === 'pencil' || currentTool === 'marker' || currentTool === 'eraser') {
+                isDrawing = true;
+                canvas.style.pointerEvents = 'auto'; // Activa el lienzo temporalmente para pintar
+                const pos = getPos(e);
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+                
+                ctx.lineWidth = brushSizeInput.value;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+
+                if (currentTool === 'pencil') {
+                    ctx.globalCompositeOperation = 'source-over';
+                    ctx.strokeStyle = currentColor;
+                    ctx.globalAlpha = 1.0;
+                } else if (currentTool === 'marker') {
+                    ctx.globalCompositeOperation = 'source-over';
+                    ctx.strokeStyle = currentColor;
+                    ctx.globalAlpha = 0.4;
+                } else if (currentTool === 'eraser') {
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.globalAlpha = 1.0;
+                }
+            }
+        }, {passive: true});
+
+        window.addEventListener('touchmove', function(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }, {passive: false});
+
+        window.addEventListener('touchend', function() {
+            if (isDrawing) {
+                ctx.closePath();
+                isDrawing = false;
+                canvas.style.pointerEvents = 'none'; // Libera la pantalla de inmediato
+                saveDrawing();
+            }
+        });
+
+        // Soporte Mouse (PC)
+        container.addEventListener('mousedown', function(e) {
+            isDrawing = true;
+            canvas.style.pointerEvents = 'auto';
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+            ctx.lineWidth = brushSizeInput.value;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = currentColor;
+            if(currentTool === 'eraser') ctx.globalCompositeOperation = 'destination-out';
+            else ctx.globalCompositeOperation = 'source-over';
+        });
+        window.addEventListener('mousemove', function(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        });
+        window.addEventListener('mouseup', function() {
+            if (isDrawing) {
+                isDrawing = false;
+                canvas.style.pointerEvents = 'none';
+                saveDrawing();
+            }
+        });
+
+        function setTool(tool) {
+            currentTool = tool;
+            document.querySelectorAll('.btn-tool').forEach(b => {
+                if(b.id !== 'speak-btn') b.classList.remove('active');
+            });
+            document.getElementById(`tool-${tool}`).classList.add('active');
+        }
+
+        function setColor(color, element) {
+            currentColor = color;
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+            element.classList.add('selected');
+            if (currentTool === 'eraser') setTool('pencil');
+        }
+
+        function saveDrawing() {
+            savedDrawings[currentPage] = canvas.toDataURL();
+        }
+
+        function restoreDrawing() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (savedDrawings[currentPage]) {
+                let img = new Image();
+                img.src = savedDrawings[currentPage];
+                img.onload = function() {
+                    ctx.globalCompositeOperation = 'source-over';
+                    ctx.globalAlpha = 1.0;
+                    ctx.drawImage(img, 0, 0);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
